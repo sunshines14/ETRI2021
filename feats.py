@@ -8,13 +8,13 @@ import soundfile as sound
 from multiprocessing import Pool
 
 
-#data_path = '/home/soonshin/sss/dataset/SED/train/'
-#csv_file = '/home/soonshin/sss/dataset/SED/meta/train_combine11.csv'
-#output_path = 'features/train_combine11_0.4_logmel40_norm'
+data_path = '/home/soonshin/sss/dataset/SED/train/'
+csv_file = '/home/soonshin/sss/dataset/SED/meta/train_combine17.csv'
+output_path = 'features/train_combine17_0.4_logmel40'
 
-data_path = '/home/soonshin/sss/dataset/SED/test_mobile/'
-csv_file = '/home/soonshin/sss/dataset/SED/meta/test_mobile17.csv'
-output_path = 'features/test_mobile17_0.4_logmel40_norm'
+#data_path = '/home/soonshin/sss/dataset/SED/test_clean/'
+#csv_file = '/home/soonshin/sss/dataset/SED/meta/test_clean17.csv'
+#output_path = 'features/test_clean17_0.4_logmel40'
 
 feature_type = 'logmel'
 
@@ -48,11 +48,11 @@ for i in range(len(wavpath)):
     logmel_data = np.log(logmel_data+1e-8)
     #logmel_data = (logmel_data - np.min(logmel_data)) / (np.max(logmel_data) - np.min(logmel_data))
     
-    for j in range(len(logmel_data[:,:,0][:,0])):
-        mean = np.mean(logmel_data[:,:,0][j,:])
-        std = np.std(logmel_data[:,:,0][j,:])
-        logmel_data[:,:,0][j,:] = ((logmel_data[:,:,0][j,:]-mean)/std)
-        logmel_data[:,:,0][np.isnan(logmel_data[:,:,0])]=0.
+    #for j in range(len(logmel_data[:,:,0][:,0])):
+    #    mean = np.mean(logmel_data[:,:,0][j,:])
+    #    std = np.std(logmel_data[:,:,0][j,:])
+    #    logmel_data[:,:,0][j,:] = ((logmel_data[:,:,0][j,:]-mean)/std)
+    #    logmel_data[:,:,0][np.isnan(logmel_data[:,:,0])]=0.
                         
     feature_data = {'feat_data': logmel_data}
 

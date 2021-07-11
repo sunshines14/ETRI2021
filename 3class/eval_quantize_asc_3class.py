@@ -45,14 +45,14 @@ is_eval = False
 if not is_eval:
     data_path = '/home/soonshin/sss/dataset/ASC/2020task1b/TAU-urban-acoustic-scenes-2020-3class-development/'
     val_csv = data_path + 'evaluation_setup/fold1_evaluate.csv'
-    feat_path = 'features/valid_asc_3class_logmel128_norm'
+    feat_path = 'features/valid_asc_3class_48k_logmel128'
     model_path = sys.argv[1]
     csv_path = sys.argv[2].replace('.csv','-asc-3class.csv')
     
 else:
     data_path = '/home/soonshin/sss/dataset/ASC/2020task1b/TAU-urban-acoustic-scenes-2020-3class-development/'
     val_csv = data_path + 'evaluation_setup/fold1_evaluate.csv'
-    feat_path = 'features/valid_asc_3class_logmel128_norm'
+    feat_path = 'features/valid_asc_3class_48k_logmel128'
     model_path = sys.argv[1]
     csv_path = sys.argv[2].replace('.csv','-eval.csv')
 
@@ -65,9 +65,9 @@ print (csv_path)
 #=========================================================================================================#
 if not is_eval:
     data_val, y_val = load_data_2020(feat_path, val_csv, num_freq_bin, 'logmel')
-    #data_deltas_val = deltas(data_val)
-    #data_deltas_deltas_val = deltas(data_deltas_val)
-    #data_val = np.concatenate((data_val[:,:,4:-4,:], data_deltas_val[:,:,2:-2,:], data_deltas_deltas_val), axis=-1)
+    data_deltas_val = deltas(data_val)
+    data_deltas_deltas_val = deltas(data_deltas_val)
+    data_val = np.concatenate((data_val[:,:,4:-4,:], data_deltas_val[:,:,2:-2,:], data_deltas_deltas_val), axis=-1)
     y_val_onehot = tf.keras.utils.to_categorical(y_val, num_classes)
     print(data_val.shape)
     print(y_val.shape)
@@ -78,9 +78,9 @@ if not is_eval:
     
 else:
     data_val = load_data_2020_evaluate(feat_path, val_csv, num_freq_bin, 'logmel')
-    #data_deltas_val = deltas(data_val)
-    #data_deltas_deltas_val = deltas(data_deltas_val)
-    #data_val = np.concatenate((data_val[:,:,4:-4,:], data_deltas_val[:,:,2:-2,:], data_deltas_deltas_val), axis=-1)
+    data_deltas_val = deltas(data_val)
+    data_deltas_deltas_val = deltas(data_deltas_val)
+    data_val = np.concatenate((data_val[:,:,4:-4,:], data_deltas_val[:,:,2:-2,:], data_deltas_deltas_val), axis=-1)
     print(data_val.shape)
     
     dev_test_df = pd.read_csv(val_csv, sep='\t', encoding='ASCII')

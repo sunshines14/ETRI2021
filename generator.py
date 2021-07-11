@@ -5,7 +5,6 @@ import threading
 import keras
 from keras import backend as K
 from utils import *
-sys.path.append("..")
 
 
 class Generator_timefreqmask_withdelta_nocropping_splitted():
@@ -30,7 +29,6 @@ class Generator_timefreqmask_withdelta_nocropping_splitted():
             while True:
                 indexes = self.__get_exploration_order()
 
-                # split data and then load it to memory one by one
                 item_num = self.sample_num // self.splitted_num - (self.sample_num // self.splitted_num) % self.batch_size
                 for k in range(self.splitted_num):
                     cur_item_num = item_num
@@ -50,7 +48,6 @@ class Generator_timefreqmask_withdelta_nocropping_splitted():
                     itr_num = int(cur_item_num // (self.batch_size * 2))
                     
                     for i in range(itr_num):
-                        #batch_ids = indexes[i * self.batch_size * 2:(i + 1) * self.batch_size * 2]
                         batch_ids = np.arange(cur_item_num)[i*self.batch_size * 2:(i + 1) * self.batch_size * 2]
                         X, y = self.__data_generation(batch_ids, X_train, y_train)
                         yield X, y
@@ -74,15 +71,11 @@ class Generator_timefreqmask_withdelta_nocropping_splitted():
         
         for j in range(X1.shape[0]):
             # spectrum augment
-            #for c in range(X1.shape[3]):
-            #    X1[j, :, :, c] = frequency_masking(X1[j, :, :, c])
-            #    X1[j, :, :, c] = time_masking(X1[j, :, :, c])
-            #    X2[j, :, :, c] = frequency_masking(X2[j, :, :, c])
-            #    X2[j, :, :, c] = time_masking(X2[j, :, :, c])
-            X1[j, :, :, 0] = frequency_masking(X1[j, :, :, 0])
-            X1[j, :, :, 0] = time_masking(X1[j, :, :, 0])
-            X2[j, :, :, 0] = frequency_masking(X2[j, :, :, 0])
-            X2[j, :, :, 0] = time_masking(X2[j, :, :, 0])
+            for c in range(X1.shape[3]):
+                X1[j, :, :, c] = frequency_masking(X1[j, :, :, c])
+                X1[j, :, :, c] = time_masking(X1[j, :, :, c])
+                X2[j, :, :, c] = frequency_masking(X2[j, :, :, c])
+                X2[j, :, :, c] = time_masking(X2[j, :, :, c])
                 
         # mixup
         X = X1 * X_l + X2 * (1.0 - X_l)

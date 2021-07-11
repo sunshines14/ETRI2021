@@ -7,17 +7,17 @@ from utils import *
 from generator import *
 
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 #=========================================================================================================#
 data_path = '/home/soonshin/sss/dataset/SED/'
-train_csv = data_path + '../../workplace/etri-2021/features/train_combine11_0.4_logmel40_norm_augs.csv'
-val_csv = data_path + 'meta/test_clean11.csv'
+train_csv = data_path + 'meta/train_combine17_augs.csv'
+val_csv = data_path + 'meta/test_clean17.csv'
 
-train_feat_path = 'features/train_combine17_0.4_logmel40_norm_augs'
-valid_feat_path = 'features/test_clean17_0.4_logmel40_norm'
+train_feat_path = 'features/train_combine17_0.4_logmel40_augs'
+valid_feat_path = 'features/test_clean17_0.4_logmel40'
 
-experiments = 'exp/exp_combine11_0.4_logmel40_norm_augs_resnet'
+experiments = 'exp/exp_combine17_0.4_logmel40_augs_mobilenet_ca_fusion'
 
 if not os.path.exists(experiments):
     os.makedirs(experiments)
@@ -26,14 +26,14 @@ if not os.path.exists(experiments):
 num_audio_channels = 1
 num_freq_bin = 40
 num_time_bin = 40
-num_classes = 11
+num_classes = 17
 max_lr = 0.1
 batch_size = 32
 num_epochs = 256
 mixup_alpha = 0.4
 sample_num = len(open(train_csv, 'r').readlines()) - 1
 
-model_selection = 3
+model_selection = 1
 focal_loss = False
 use_split = False
 

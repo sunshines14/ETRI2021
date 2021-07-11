@@ -9,11 +9,11 @@ from multiprocessing import Pool
 
 
 data_path = '/home/soonshin/sss/dataset/ASC/2020task1b/TAU-urban-acoustic-scenes-2020-3class-development/'
-csv_file = data_path + 'evaluation_setup/fold1_evaluate.csv'
-output_path = 'features/valid_asc_3class_logmel128_norm'
+csv_file = data_path + 'evaluation_setup/fold1_train.csv'
+output_path = 'features/train_asc_3class_48k_logmel128'
 feature_type = 'logmel'
 
-sr = 16000
+sr = 48000
 duration = 10
 num_freq_bin = 128
 num_fft = 2048
@@ -37,6 +37,7 @@ for i in range(len(wavpath)):
         
     # sampling rate
     if fs != sr:
+        print ("sampling rate converted")
         mono = librosa.resample(mono, fs, sr, fix=True) 
         
     logmel_data[:,:,0] = librosa.feature.melspectrogram(mono[:], 
@@ -50,11 +51,11 @@ for i in range(len(wavpath)):
                                                         norm=None)
     logmel_data = np.log(logmel_data+1e-8)
     
-    for j in range(len(logmel_data[:,:,0][:,0])):
-        mean = np.mean(logmel_data[:,:,0][j,:])
-        std = np.std(logmel_data[:,:,0][j,:])
-        logmel_data[:,:,0][j,:] = ((logmel_data[:,:,0][j,:]-mean)/std)
-        logmel_data[:,:,0][np.isnan(logmel_data[:,:,0])]=0.
+    #for j in range(len(logmel_data[:,:,0][:,0])):
+    #    mean = np.mean(logmel_data[:,:,0][j,:])
+    #    std = np.std(logmel_data[:,:,0][j,:])
+    #    logmel_data[:,:,0][j,:] = ((logmel_data[:,:,0][j,:]-mean)/std)
+    #    logmel_data[:,:,0][np.isnan(logmel_data[:,:,0])]=0.
 
     feature_data = {'feat_data': logmel_data,}
 

@@ -13,8 +13,8 @@ import random
 overwrite = True
 
 data_path = '/home/soonshin/sss/dataset/SED/'
-csv_file = data_path + 'meta/train_all.csv'
-output_path = '../../features/train_all_0.4_logmel40_norm_mix'
+csv_file = data_path + 'meta/train_combine17.csv'
+output_path = '../../features/train_combine17_0.4_logmel40_mix'
 feature_type = 'logmel'
 folder_name = data_path + 'train/'
 
@@ -40,7 +40,6 @@ def class_sort():
         ap = []
         class_list.append(ap)
     with open(csv_file, 'r') as csv_r:
-        # reader = csv.reader(csv_r)
         for line in islice(csv_r, 1, None):
             file_name = line.split(',')[0]
             print (file_name)
@@ -80,11 +79,11 @@ def data_add():
             #feat_data = logmel_data
             #feat_data = (feat_data - np.min(feat_data)) / (np.max(feat_data) - np.min(feat_data))
         
-            for j in range(len(logmel_data[:,:,0][:,0])):
-                mean = np.mean(logmel_data[:,:,0][j,:])
-                std = np.std(logmel_data[:,:,0][j,:])
-                logmel_data[:,:,0][j,:] = ((logmel_data[:,:,0][j,:]-mean)/std)
-                logmel_data[:,:,0][np.isnan(logmel_data[:,:,0])]=0.
+            #for j in range(len(logmel_data[:,:,0][:,0])):
+            #    mean = np.mean(logmel_data[:,:,0][j,:])
+            #    std = np.std(logmel_data[:,:,0][j,:])
+            #    logmel_data[:,:,0][j,:] = ((logmel_data[:,:,0][j,:]-mean)/std)
+            #    logmel_data[:,:,0][np.isnan(logmel_data[:,:,0])]=0.
 
             feature_data = {'feat_data': logmel_data}
 

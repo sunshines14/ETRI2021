@@ -14,19 +14,18 @@ data_path = '/home/soonshin/sss/dataset/ASC/2020task1b/TAU-urban-acoustic-scenes
 train_csv = data_path + 'evaluation_setup/fold1_train.csv'
 val_csv = data_path + 'evaluation_setup/fold1_evaluate.csv'
 
-train_feat_path = 'features/train_asc_3class_logmel128_norm'
-valid_feat_path = 'features/valid_asc_3class_logmel128_norm'
+train_feat_path = 'features/train_asc_3class_48k_logmel128'
+valid_feat_path = 'features/valid_asc_3class_48k_logmel128'
 
-experiments = 'exp/exp_asc_3class_logmel128_norm_wodelta_resnet'
+experiments = 'exp/exp_asc_3class_48k_logmel128_norm_delta_mobilenet_ca_fusion'
 
 if not os.path.exists(experiments):
     os.makedirs(experiments)
 
-balance_csv = balance_class_data(train_csv, experiments)
 #=========================================================================================================#
 num_audio_channels = 1
 num_freq_bin = 128
-num_time_bin = 157
+num_time_bin = 461
 num_classes = 3
 max_lr = 0.1
 batch_size = 32
@@ -34,20 +33,20 @@ num_epochs = 256
 mixup_alpha = 0.4
 sample_num = len(open(train_csv, 'r').readlines()) - 1
 
-model_selection = 3
+model_selection = 1
 focal_loss = False
 use_split = False
 
 #=========================================================================================================#    
 # compute delta and delta delta for validation data
 data_val, y_val = load_data_2020(valid_feat_path, val_csv, num_freq_bin, 'logmel')
-#data_deltas_val = deltas(data_val)
-#data_deltas_deltas_val = deltas(data_deltas_val)
-#data_val = np.concatenate((data_val[:,:,4:-4,:], data_deltas_val[:,:,2:-2,:], data_deltas_deltas_val), axis=-1)
+data_deltas_val = deltas(data_val)
+data_deltas_deltas_val = deltas(data_deltas_val)
+data_val = np.concatenate((data_val[:,:,4:-4,:], data_deltas_val[:,:,2:-2,:], data_deltas_deltas_val), axis=-1)
 y_val_onehot = keras.utils.to_categorical(y_val, num_classes)
 
 #=========================================================================================================#
-#num_audio_channels = 3*num_audio_channels
+num_audio_channels = 3*num_audio_channels
 if model_selection == 0:
     from models.mobnet_ca import model_mobnet_ca
     model = model_mobnet_ca(num_classes, 
@@ -79,6 +78,14 @@ elif model_selection == 3:
                          num_stacks = 3,
                          use_split = use_split)
     
+elif model_selection == 4:
+    from models.mobnet import model_mobnet
+    model = model_mobnet(num_classes, 
+                         input_shape=[num_freq_bin, num_time_bin, num_audio_channels], 
+                         num_filters=24, 
+                         wd=1e-3, 
+                         alpha=1)
+    
 model.summary()
 print (data_val.shape)
 
@@ -103,14 +110,12 @@ checkpoint = keras.callbacks.ModelCheckpoint(save_path,
 callbacks = [lr_scheduler, checkpoint]
 
 #=========================================================================================================#
-train_data_generator = Generator_balanceclass_timefreqmask_withdelta_nocropping_splitted(train_feat_path, 
-                                                                                         train_csv, 
-                                                                                         balance_csv, 
-                                                                                         experiments, 
-                                                                                         num_freq_bin, 
-                                                                                         batch_size=batch_size,
-                                                                                         alpha=mixup_alpha, 
-                                                                                         splitted_num=4)()
+train_data_generator = Generator_timefreqmask_withdelta_nocropping_splitted(train_feat_path, 
+                                                                            train_csv,  
+                                                                            num_freq_bin, 
+                                                                            batch_size=batch_size,
+                                                                            alpha=mixup_alpha, 
+                                                                            splitted_num=4)()
 
 history = model.fit(train_data_generator,
                     validation_data = (data_val, y_val_onehot),

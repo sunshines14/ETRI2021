@@ -11,8 +11,8 @@ from multiprocessing import Pool
 overwrite = True
 
 data_path = '/home/soonshin/sss/dataset/SED/'
-csv_file = data_path + 'meta/train_all.csv'
-output_path = '../../features/train_all_0.4_logmel40_norm_pitch'
+csv_file = data_path + 'meta/train_combine17.csv'
+output_path = '../../features/train_combine17_0.4_logmel40_pitch'
 feature_type = 'logmel'
 folder_name = data_path + 'train/'
 

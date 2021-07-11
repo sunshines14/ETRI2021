@@ -5,15 +5,12 @@ import threading
 import keras
 from keras import backend as K
 from utils_asc_3class import *
-sys.path.append("..")
 
 
-class Generator_balanceclass_timefreqmask_withdelta_nocropping_splitted():
-    def __init__(self, feat_path, train_csv, balance_csv, experiments, feat_dim, batch_size=32, alpha=0.2, shuffle=True, splitted_num=4): 
+class Generator_timefreqmask_withdelta_nocropping_splitted():
+    def __init__(self, feat_path, train_csv, feat_dim, batch_size=32, alpha=0.2, shuffle=True, splitted_num=4): 
         self.feat_path = feat_path
         self.train_csv = train_csv
-        self.balance_csv = balance_csv
-        self.experiments = experiments
         self.feat_dim = feat_dim
         self.batch_size = batch_size
         self.alpha = alpha
@@ -30,12 +27,7 @@ class Generator_balanceclass_timefreqmask_withdelta_nocropping_splitted():
         with self.lock:
             while True:
                 indexes = self.__get_exploration_order()
-                
-                # balance class data
-                item_num = self.sample_num // self.splitted_num - (self.sample_num // self.splitted_num) % self.batch_size
-                train_csv_balanceclass = sample_csv(self.balance_csv, self.sample_num, self.experiments)
 
-                # split data and then load it to memory one by one
                 item_num = self.sample_num // self.splitted_num - (self.sample_num // self.splitted_num) % self.batch_size
                 for k in range(self.splitted_num):
                     cur_item_num = item_num
@@ -48,9 +40,9 @@ class Generator_balanceclass_timefreqmask_withdelta_nocropping_splitted():
                     lines = indexes[s:e]
                     X_train, y_train = load_data_2020_splitted(self.feat_path, self.train_csv, self.feat_dim, lines, 'logmel')
                     y_train = keras.utils.to_categorical(y_train, 3)
-                    #X_deltas_train = deltas(X_train)
-                    #X_deltas_deltas_train = deltas(X_deltas_train)
-                    #X_train = np.concatenate((X_train[:,:,4:-4,:], X_deltas_train[:,:,2:-2,:], X_deltas_deltas_train), axis=-1)
+                    X_deltas_train = deltas(X_train)
+                    X_deltas_deltas_train = deltas(X_deltas_train)
+                    X_train = np.concatenate((X_train[:,:,4:-4,:], X_deltas_train[:,:,2:-2,:], X_deltas_deltas_train), axis=-1)
                     
                     itr_num = int(cur_item_num // (self.batch_size * 2))
                     
