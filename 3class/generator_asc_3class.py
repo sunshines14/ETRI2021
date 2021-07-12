@@ -40,9 +40,9 @@ class Generator_timefreqmask_withdelta_nocropping_splitted():
                     lines = indexes[s:e]
                     X_train, y_train = load_data_2020_splitted(self.feat_path, self.train_csv, self.feat_dim, lines, 'logmel')
                     y_train = keras.utils.to_categorical(y_train, 3)
-                    X_deltas_train = deltas(X_train)
-                    X_deltas_deltas_train = deltas(X_deltas_train)
-                    X_train = np.concatenate((X_train[:,:,4:-4,:], X_deltas_train[:,:,2:-2,:], X_deltas_deltas_train), axis=-1)
+                    #X_deltas_train = deltas(X_train)
+                    #X_deltas_deltas_train = deltas(X_deltas_train)
+                    #X_train = np.concatenate((X_train[:,:,4:-4,:], X_deltas_train[:,:,2:-2,:], X_deltas_deltas_train), axis=-1)
                     
                     itr_num = int(cur_item_num // (self.batch_size * 2))
                     

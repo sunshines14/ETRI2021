@@ -17,7 +17,7 @@ val_csv = data_path + 'evaluation_setup/fold1_evaluate.csv'
 train_feat_path = 'features/train_asc_3class_48k_logmel128'
 valid_feat_path = 'features/valid_asc_3class_48k_logmel128'
 
-experiments = 'exp/exp_asc_3class_48k_logmel128_norm_delta_mobilenet_ca_fusion'
+experiments = 'exp/exp_asc_3class_48k_logmel128_mobilenet_ca_fusion'
 
 if not os.path.exists(experiments):
     os.makedirs(experiments)
@@ -25,7 +25,7 @@ if not os.path.exists(experiments):
 #=========================================================================================================#
 num_audio_channels = 1
 num_freq_bin = 128
-num_time_bin = 461
+num_time_bin = 469 # if wodelta is 469 else 461
 num_classes = 3
 max_lr = 0.1
 batch_size = 32
@@ -40,13 +40,13 @@ use_split = False
 #=========================================================================================================#    
 # compute delta and delta delta for validation data
 data_val, y_val = load_data_2020(valid_feat_path, val_csv, num_freq_bin, 'logmel')
-data_deltas_val = deltas(data_val)
-data_deltas_deltas_val = deltas(data_deltas_val)
-data_val = np.concatenate((data_val[:,:,4:-4,:], data_deltas_val[:,:,2:-2,:], data_deltas_deltas_val), axis=-1)
+#data_deltas_val = deltas(data_val)
+#data_deltas_deltas_val = deltas(data_deltas_val)
+#data_val = np.concatenate((data_val[:,:,4:-4,:], data_deltas_val[:,:,2:-2,:], data_deltas_deltas_val), axis=-1)
 y_val_onehot = keras.utils.to_categorical(y_val, num_classes)
 
 #=========================================================================================================#
-num_audio_channels = 3*num_audio_channels
+#num_audio_channels = 3*num_audio_channels
 if model_selection == 0:
     from models.mobnet_ca import model_mobnet_ca
     model = model_mobnet_ca(num_classes, 

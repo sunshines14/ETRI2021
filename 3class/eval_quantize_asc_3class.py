@@ -45,14 +45,14 @@ is_eval = False
 if not is_eval:
     data_path = '/home/soonshin/sss/dataset/ASC/2020task1b/TAU-urban-acoustic-scenes-2020-3class-development/'
     val_csv = data_path + 'evaluation_setup/fold1_evaluate.csv'
-    feat_path = 'features/valid_asc_3class_48k_logmel128'
+    feat_path = 'features/valid_asc_3class_48k_logmel128_norm'
     model_path = sys.argv[1]
     csv_path = sys.argv[2].replace('.csv','-asc-3class.csv')
     
 else:
     data_path = '/home/soonshin/sss/dataset/ASC/2020task1b/TAU-urban-acoustic-scenes-2020-3class-development/'
     val_csv = data_path + 'evaluation_setup/fold1_evaluate.csv'
-    feat_path = 'features/valid_asc_3class_48k_logmel128'
+    feat_path = 'features/valid_asc_3class_48k_logmel128_norm'
     model_path = sys.argv[1]
     csv_path = sys.argv[2].replace('.csv','-eval.csv')
 

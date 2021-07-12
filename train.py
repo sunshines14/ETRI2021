@@ -7,7 +7,7 @@ from utils import *
 from generator import *
 
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 #=========================================================================================================#
 data_path = '/home/soonshin/sss/dataset/SED/'
