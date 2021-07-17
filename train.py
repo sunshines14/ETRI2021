@@ -12,12 +12,12 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 #=========================================================================================================#
 data_path = '/home/soonshin/sss/dataset/SED/'
 train_csv = data_path + 'meta/train_combine17_augs.csv'
-val_csv = data_path + 'meta/test_clean17.csv'
+val_csv = data_path + 'meta/test_mobile17.csv'
 
-train_feat_path = 'features/train_combine17_0.4_logmel40_augs'
-valid_feat_path = 'features/test_clean17_0.4_logmel40'
+train_feat_path = 'features/train_combine17_0.4_logmel40_norm_v2_augs'
+valid_feat_path = 'features/test_mobile17_0.4_logmel40_norm_v2'
 
-experiments = 'exp/exp_combine17_0.4_logmel40_augs_mobilenet_ca_fusion'
+experiments = 'exp/exp_combine17_0.4_logmel40_norm_v2_augs_mobilenet_ca_fusion'
 
 if not os.path.exists(experiments):
     os.makedirs(experiments)

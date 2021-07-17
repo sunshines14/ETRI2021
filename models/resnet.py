@@ -136,7 +136,7 @@ def model_resnet(num_classes, input_shape, num_filters, kernel_size, wd, num_sta
                      wd=wd,
                      use_relu=False)
     OutputPath = BatchNormalization(center=False, scale=False)(OutputPath)
-    #OutputPath = coordinate_attention(OutputPath, reduction_ratio=8)
+    OutputPath = coordinate_attention(OutputPath, reduction_ratio=8)
     OutputPath = GlobalAveragePooling2D()(OutputPath)
     OutputPath = Activation('softmax')(OutputPath)
     

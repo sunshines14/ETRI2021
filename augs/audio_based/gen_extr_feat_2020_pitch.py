@@ -12,7 +12,7 @@ overwrite = True
 
 data_path = '/home/soonshin/sss/dataset/SED/'
 csv_file = data_path + 'meta/train_combine17.csv'
-output_path = '../../features/train_combine17_0.4_logmel40_pitch'
+output_path = '../../features/train_combine17_0.4_logmel40_norm_v2_augs'
 feature_type = 'logmel'
 folder_name = data_path + 'train/'
 
@@ -48,14 +48,13 @@ for i in range(len(wavpath)):
                                                        norm=None)
 
     logmel_data = np.log(logmel_data+1e-8)
-    #feat_data = logmel_data
-    #feat_data = (feat_data - np.min(feat_data)) / (np.max(feat_data) - np.min(feat_data))
+    logmel_data = (logmel_data - np.min(logmel_data)) / (np.max(logmel_data) - np.min(logmel_data))
         
-    for j in range(len(logmel_data[:,:,0][:,0])):
-        mean = np.mean(logmel_data[:,:,0][j,:])
-        std = np.std(logmel_data[:,:,0][j,:])
-        logmel_data[:,:,0][j,:] = ((logmel_data[:,:,0][j,:]-mean)/std)
-        logmel_data[:,:,0][np.isnan(logmel_data[:,:,0])]=0.
+    #for j in range(len(logmel_data[:,:,0][:,0])):
+    #    mean = np.mean(logmel_data[:,:,0][j,:])
+    #    std = np.std(logmel_data[:,:,0][j,:])
+    #    logmel_data[:,:,0][j,:] = ((logmel_data[:,:,0][j,:]-mean)/std)
+    #    logmel_data[:,:,0][np.isnan(logmel_data[:,:,0])]=0.
 
     feature_data = {'feat_data': logmel_data}
 
