@@ -12,10 +12,10 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 #=========================================================================================================#
 data_path = '/home/soonshin/sss/dataset/SED/'
 train_csv = data_path + 'meta/train_combine11_augs.csv'
-val_csv = data_path + 'meta/test_mobile11.csv'
+val_csv = data_path + 'meta/test_clean11.csv'
 
 train_feat_path = 'features/train_combine17_0.4_logmel40_norm_augs'
-valid_feat_path = 'features/test_mobile17_0.4_logmel40_norm'
+valid_feat_path = 'features/test_clean17_0.4_logmel40_norm'
 
 experiments = 'exp/exp_combine11_0.4_logmel40_norm_augs_mobilenet_ca_fusion'
 
