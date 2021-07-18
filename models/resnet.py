@@ -3,7 +3,6 @@ from keras import backend as K
 from tensorflow.keras.layers import *
 from keras.regularizers import l2
 from keras.models import Model
-from models.attention import se_channel_attention, coordinate_attention
 
 
 def res(inputs, num_filters, kernel_size, strides, learn_bn, wd, use_relu):
@@ -136,7 +135,6 @@ def model_resnet(num_classes, input_shape, num_filters, kernel_size, wd, num_sta
                      wd=wd,
                      use_relu=False)
     OutputPath = BatchNormalization(center=False, scale=False)(OutputPath)
-    OutputPath = coordinate_attention(OutputPath, reduction_ratio=8)
     OutputPath = GlobalAveragePooling2D()(OutputPath)
     OutputPath = Activation('softmax')(OutputPath)
     

@@ -9,8 +9,8 @@ from multiprocessing import Pool
 
 
 data_path = '/home/soonshin/sss/dataset/ASC/2020task1b/TAU-urban-acoustic-scenes-2020-3class-development/'
-csv_file = data_path + 'evaluation_setup/fold1_evaluate.csv'
-output_path = 'features/valid_asc_3class_48k_logmel128_norm'
+csv_file = data_path + 'evaluation_setup/fold1_train.csv'
+output_path = 'features/train_asc_3class_48k_logmel128_norm'
 feature_type = 'logmel'
 
 sr = 48000
@@ -50,12 +50,7 @@ for i in range(len(wavpath)):
                                                         htk=True, 
                                                         norm=None)
     logmel_data = np.log(logmel_data+1e-8)
-    
-    for j in range(len(logmel_data[:,:,0][:,0])):
-        mean = np.mean(logmel_data[:,:,0][j,:])
-        std = np.std(logmel_data[:,:,0][j,:])
-        logmel_data[:,:,0][j,:] = ((logmel_data[:,:,0][j,:]-mean)/std)
-        logmel_data[:,:,0][np.isnan(logmel_data[:,:,0])]=0.
+    logmel_data = (logmel_data - np.min(logmel_data)) / (np.max(logmel_data) - np.min(logmel_data))
 
     feature_data = {'feat_data': logmel_data,}
 

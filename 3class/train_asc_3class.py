@@ -14,10 +14,10 @@ data_path = '/home/soonshin/sss/dataset/ASC/2020task1b/TAU-urban-acoustic-scenes
 train_csv = data_path + 'evaluation_setup/fold1_train.csv'
 val_csv = data_path + 'evaluation_setup/fold1_evaluate.csv'
 
-train_feat_path = 'features/train_asc_3class_48k_logmel128'
-valid_feat_path = 'features/valid_asc_3class_48k_logmel128'
+train_feat_path = 'features/train_asc_3class_48k_logmel128_norm'
+valid_feat_path = 'features/valid_asc_3class_48k_logmel128_norm'
 
-experiments = 'exp/exp_asc_3class_48k_logmel128_mobilenet_ca_fusion'
+experiments = 'exp/exp_asc_3class_48k_logmel128_norm_mobilenet_ca_fusion'
 
 if not os.path.exists(experiments):
     os.makedirs(experiments)

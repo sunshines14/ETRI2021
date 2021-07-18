@@ -11,13 +11,13 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 #=========================================================================================================#
 data_path = '/home/soonshin/sss/dataset/SED/'
-train_csv = data_path + 'meta/train_combine17_augs.csv'
-val_csv = data_path + 'meta/test_mobile17.csv'
+train_csv = data_path + 'meta/train_combine11_augs.csv'
+val_csv = data_path + 'meta/test_mobile11.csv'
 
-train_feat_path = 'features/train_combine17_0.4_logmel40_norm_v2_augs'
-valid_feat_path = 'features/test_mobile17_0.4_logmel40_norm_v2'
+train_feat_path = 'features/train_combine17_0.4_logmel40_norm_augs'
+valid_feat_path = 'features/test_mobile17_0.4_logmel40_norm'
 
-experiments = 'exp/exp_combine17_0.4_logmel40_norm_v2_augs_mobilenet_ca_fusion'
+experiments = 'exp/exp_combine11_0.4_logmel40_norm_augs_mobilenet_ca_fusion'
 
 if not os.path.exists(experiments):
     os.makedirs(experiments)
@@ -26,7 +26,7 @@ if not os.path.exists(experiments):
 num_audio_channels = 1
 num_freq_bin = 40
 num_time_bin = 40
-num_classes = 17
+num_classes = 11
 max_lr = 0.1
 batch_size = 32
 num_epochs = 256
