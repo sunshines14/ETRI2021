@@ -44,20 +44,20 @@ is_eval = False
 
 if not is_eval:
     data_path = '/home/soonshin/sss/dataset/SED/'
-    val_csv = data_path + 'meta/test_clean11.csv'
-    feat_path = 'features/test_clean11_0.4_logmel40_norm'
+    val_csv = data_path + 'meta/test_clean17.csv'
+    feat_path = 'features/test_clean17_0.4_logmel40'
     model_path = sys.argv[1]
     csv_path = sys.argv[2].replace('.csv','-clean.csv')
     
 else:
     data_path = '/home/soonshin/sss/dataset/SED/'
-    val_csv = data_path + 'meta/test_clean11.csv'
-    feat_path = 'features/test_clean11_0.4_logmel40_norm'
+    val_csv = data_path + 'meta/test_clean17.csv'
+    feat_path = 'features/test_clean17_0.4_logmel40'
     model_path = sys.argv[1]
     csv_path = sys.argv[2].replace('.csv','-eval.csv')
 
 num_freq_bin = 40
-num_classes = 11
+num_classes = 17
 
 print (model_path)
 print (csv_path)
@@ -139,7 +139,7 @@ else:
     y_pred_val = np.argmax(preds, axis=1)
 
 #=========================================================================================================#
-'''
+
 scene_map_str = """
 baby 0 
 bicycle 1
@@ -159,8 +159,8 @@ speech 14
 unknown 15
 whistle 16
 """
-'''
 
+'''
 scene_map_str = """
 baby 0 
 bicycle 1
@@ -174,6 +174,7 @@ scream 8
 speech 9
 unknown 10
 """
+'''
 
 scene_index_map={}
 for line in scene_map_str.strip().split('\n'):
@@ -188,17 +189,17 @@ right_df = pd.DataFrame(preds, columns = ['baby',
                                           'boiling',
                                           'car', 
                                           'carpassing',
-                                          #'clock', #
+                                          'clock', #
                                           'dog',
                                           'door', 
-                                          #'fire', #
-                                          #'glass', #
+                                          'fire', #
+                                          'glass', #
                                           'jackhammer',
-                                          #'kettle', #
+                                          'kettle', #
                                           'scream',
                                           'speech',
-                                          #'siren', #
-                                          'unknown',])
-                                          #'whistle']) #
+                                          'siren', #
+                                          'unknown',
+                                          'whistle']) #
 merge = pd.concat([left_df, right_df], axis=1, sort=False)
 merge.to_csv(csv_path, sep = '\t', index=False)
