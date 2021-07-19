@@ -7,17 +7,17 @@ from utils import *
 from generator import *
 
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 #=========================================================================================================#
 data_path = '/home/soonshin/sss/dataset/SED/'
 train_csv = data_path + 'meta/train_combine17_augs.csv'
-val_csv = data_path + 'meta/test_clean17.csv'
+val_csv = data_path + 'meta/test_mobile17.csv'
 
-train_feat_path = 'features/train_combine17_0.4_logmel40_norm_augs'
-valid_feat_path = 'features/test_clean17_0.4_logmel40_norm'
+train_feat_path = 'features/train_combine17_0.4_logmel40_augs'
+valid_feat_path = 'features/test_mobile17_0.4_logmel40'
 
-experiments = 'exp/exp_combine17_0.4_logmel40_augs_mobilenet_ca'
+experiments = 'exp/exp_combine17_0.4_logmel40_augs_mobilenet_ca_fusion_trial2'
 
 if not os.path.exists(experiments):
     os.makedirs(experiments)
@@ -33,7 +33,7 @@ num_epochs = 256
 mixup_alpha = 0.4
 sample_num = len(open(train_csv, 'r').readlines()) - 1
 
-model_selection = 0
+model_selection = 1
 focal_loss = False
 use_split = False
 

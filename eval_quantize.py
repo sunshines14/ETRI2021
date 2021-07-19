@@ -44,10 +44,10 @@ is_eval = False
 
 if not is_eval:
     data_path = '/home/soonshin/sss/dataset/SED/'
-    val_csv = data_path + 'meta/test_clean17.csv'
-    feat_path = 'features/test_clean17_0.4_logmel40'
+    val_csv = data_path + 'meta/test_mobile17.csv'
+    feat_path = 'features/test_mobile17_0.4_logmel40'
     model_path = sys.argv[1]
-    csv_path = sys.argv[2].replace('.csv','-clean.csv')
+    csv_path = sys.argv[2].replace('.csv','-mobile.csv')
     
 else:
     data_path = '/home/soonshin/sss/dataset/SED/'
