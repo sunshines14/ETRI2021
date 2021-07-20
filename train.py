@@ -17,7 +17,7 @@ val_csv = data_path + 'meta/test_mobile17.csv'
 train_feat_path = 'features/train_combine17_0.4_logmel40_augs'
 valid_feat_path = 'features/test_mobile17_0.4_logmel40'
 
-experiments = 'exp/exp_combine17_0.4_logmel40_augs_mobilenet_ca_fusion_trial2'
+experiments = 'exp/exp_combine17_0.4_logmel40_augs_mobilenet_ca_fusion_mobile'
 
 if not os.path.exists(experiments):
     os.makedirs(experiments)
